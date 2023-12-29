@@ -16,7 +16,8 @@ for (let length = 0; length < blogs.length; length++) {
                   `<div class="blog-images">
                     ${blogs[length][3].map(image => `<img class="blog-image" height="200" src="/images/${image}" alt="${image}" />`).join('')}
                   </div>` 
-                  : ''}
+                  : ''}<br/>
+                <sub><i><small>${blogs[length][4]}</small></i></sub>
                 <div id="links">
                 </div>${pageBottom}` 
 

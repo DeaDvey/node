@@ -32,7 +32,7 @@ async function readFilesAndPopulateVideos(path) {
         const videosJSFileContent = `let videos = ${JSON.stringify(videos)}
 
 if (typeof module !== 'undefined' && module.exports) {
-	module.exports = videos;
+       module.exports = videos;
 }`;
 
         await fs.writeFile("/srv/www/htdocs/video/videos.js", videosJSFileContent);

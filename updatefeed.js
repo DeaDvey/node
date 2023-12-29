@@ -42,6 +42,7 @@ function createRSSFeed(blogs) {
         const date = escapeQuotes(blog[2]);
         const imagesHtml = blogs[index][3] ? `${blogs[index][3].map(image => `<img src="/images/${image}" alt="Blog Image" />`).join('')}` : '';
         const totalContent = content + escapeQuotes(imagesHtml)
+        const category = blog[4] ? blog[4].map(category => `<category>${escapeQuotes(category)}</category>`).join('') : '';
 
         rssFeed += `
       <item>
@@ -49,6 +50,7 @@ function createRSSFeed(blogs) {
          <link>https://deadvey.com/blog/blogs/${index}.html</link>
          <description>${totalContent}</description>
          <pubDate>${date} +0000</pubDate>
+         ${category}
       </item>`;
     }
 
