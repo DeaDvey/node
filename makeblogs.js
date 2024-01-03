@@ -1,11 +1,12 @@
-const lastupdated = require("/srv/www/htdocs/lastupdated.js")
 const blogs = require("/srv/www/htdocs/blog/blogs.js");
 const filePath = "/srv/www/htdocs/blog/blogs/";
 const fs = require("fs");
 const { pageTop, pageBottom } = require("/srv/www/htdocs/html.js")
 
 console.log(blogs);
-
+ ////////////////////////////////
+// Make each individual blog page
+/////////////////////////////////
 for (let length = 0; length < blogs.length; length++) {
   console.log(length)
   const blogFilePath = filePath + length + ".html";
@@ -39,6 +40,39 @@ for (let length = 0; length < blogs.length; length++) {
     }
   });
 
+///////////////////////
+// Make latest blog
+//////////////////////
+latestBlogPath = filePath + "latest.html"
+console.log(latestBlogPath)
+lastitem = blogs.length - 1
+let latestcontent = `${pageTop}
+               <h3 class="blog-date">${blogs[lastitem][2]}</h3>
+               <h1 class="blog-title">${blogs[lastitem][0]}</h1>
+                <p class="blog-content">${blogs[lastitem][1]}</p>
+                ${blogs[lastitem][3] ?
+                  `<div class="blog-images">
+                    ${blogs[lastitem][3].map(image => `<img class="blog-image" height="200" src="/images/${image}" alt="${image}" />`).join('')}
+                  </div>`
+                  : ''}<br/>
+                <sub><i><small>${blogs[lastitem][4]}</small></i></sub>
+                <p class="previous"><a href="${lastitem-1}.html"><-- Previous</a></p>
+                <div id="links">
+                </div><script src="/template.js"></script>${pageBottom}`
+
+fs.writeFile(latestBlogPath, latestcontent, (err) => {
+    if (err) {
+      console.error('Error creating file:', err);
+    } else {
+      console.log('File created successfully:', latestBlogPath);
+    }
+  });
+
+
+
+///////////////////////
+// Make entire blog
+//////////////////////
 function entireBlogPost() {
 	let htmlPage = pageTop;
 
