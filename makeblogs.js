@@ -2,6 +2,7 @@ const blogs = require("/srv/www/htdocs/blog/blogs.js");
 const filePath = "/srv/www/htdocs/blog/blogs/";
 const fs = require("fs");
 const { pageTop, pageBottom } = require("/srv/www/htdocs/html.js")
+const comments = require("/srv/www/htdocs/blog/comments.js")
 
 console.log(blogs);
  ////////////////////////////////
@@ -10,7 +11,13 @@ console.log(blogs);
 for (let length = 0; length < blogs.length; length++) {
   console.log(length)
   const blogFilePath = filePath + length + ".html";
-  let content = `${pageTop}
+  let commentsHTML = ""
+  
+  for (let commentsCounter = comments[length].length - 1; commentsCounter >= 0; commentsCounter--) {
+		commentsHTML += comments[length][commentsCounter] + "<br/>"
+  }
+
+  let content = `${pageTop}<div id="main">
                 <h3 class="blog-date">${blogs[length][2]}</h3>
                 <h1 class="blog-title">${blogs[length][0]}</h1>
                 <p class="blog-content">${blogs[length][1]}</p>
@@ -19,7 +26,21 @@ for (let length = 0; length < blogs.length; length++) {
                     ${blogs[length][3].map(image => `<img class="blog-image" height="200" src="/images/${image}" alt="${image}" />`).join('')}
                   </div>` 
                   : ''}<br/>
-                <sub><i><small>${blogs[length][4]}</small></i></sub>` 
+				 <sub><i><small>${blogs[length][4]}</small></i></sub><hr/>
+				<h3>Comments:</h3><br/>
+				 <form action="" id="commentForm">
+						<input name="${length}" class="form-control" id="name" placeholder="Enter your name/alias (no login required)..."><br/>
+						<input height="40px" name="${length}" class="form-control input-comment" id="comment" placeholder="Enter your Comment...">
+						<button type="submit">Submit</button>
+				</form>
+
+				  <div class="comments">
+						<br/>
+				      ${commentsHTML}
+				  </div>
+				</div>` 
+
+
   if (length > 0) { // Generate link to previous blog
       content+=`<p class="previous"><a href="${length-1}.html"><-- Previous</a></p>`
   }
@@ -29,7 +50,7 @@ for (let length = 0; length < blogs.length; length++) {
                 
   content += `
                 <div id="links">
-                </div><script src="/template.js"></script>${pageBottom}` 
+                </div><script src="/blog/comments.js"></script><script src="/blog/submit-comment.js"></script>${pageBottom}` 
 
 
   fs.writeFile(blogFilePath, content, (err) => {
