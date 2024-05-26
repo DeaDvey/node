@@ -52,7 +52,6 @@ for (let page = blogs.length - 1; page >= 0; page--) {
     oldMonth = month
 }
 
-
 // Step 2: Read the HTML file
 fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {

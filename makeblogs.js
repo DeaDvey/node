@@ -11,11 +11,7 @@ console.log(blogs);
 for (let length = 0; length < blogs.length; length++) {
   console.log(length)
   const blogFilePath = filePath + length + ".html";
-  let commentsHTML = ""
   
-  for (let commentsCounter = comments[length].length - 1; commentsCounter >= 0; commentsCounter--) {
-		commentsHTML += comments[length][commentsCounter] + "<br/>"
-  }
 
   let content = `${pageTop}<div id="main">
                 <h3 class="blog-date">${blogs[length][2]}</h3>
@@ -26,17 +22,17 @@ for (let length = 0; length < blogs.length; length++) {
                     ${blogs[length][3].map(image => `<img class="blog-image" height="200" src="/images/${image}" alt="${image}" />`).join('')}
                   </div>` 
                   : ''}<br/>
-				 <sub><i><small>${blogs[length][4]}</small></i></sub><hr/>
-				<h3>Comments:</h3><br/>
+				 <sub><i><small>${blogs[length][4]}</small></i></sub><!--hr/>
+				<h3>Comments section (under construction):</h3><br/>
 				 <form action="" id="commentForm">
 						<input name="${length}" class="form-control" id="name" placeholder="Enter your name/alias (no login required)..."><br/>
 						<input height="40px" name="${length}" class="form-control input-comment" id="comment" placeholder="Enter your Comment...">
 						<button type="submit">Submit</button>
 				</form>
 
-				  <div class="comments">
+				  <div class="comments"-->
 						<br/>
-				      ${commentsHTML}
+				      
 				  </div>
 				</div>` 
 
@@ -79,7 +75,7 @@ let latestcontent = `${pageTop}
                 <sub><i><small>${blogs[lastitem][4]}</small></i></sub>
                 <p class="previous"><a href="${lastitem-1}.html"><-- Previous</a></p>
                 <div id="links">
-                </div><script src="/template.js"></script>${pageBottom}`
+                </div><script src="https://code.jquery.com/jquery-3.6.1.min.js"></script><script src="/template.js"></script>${pageBottom}`
 
 fs.writeFile(latestBlogPath, latestcontent, (err) => {
     if (err) {
