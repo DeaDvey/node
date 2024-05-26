@@ -1,2 +1,0 @@
-reviews=$(curl https://letterboxd.com/deadvey/rss/)
-echo $reviews | sed -e 'sH/item\(.*\)item/\1/'
