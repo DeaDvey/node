@@ -5,7 +5,7 @@ const { pageTop, pageBottom } = require("/srv/www/htdocs/html.js")
 const comments = require("/srv/www/htdocs/blog/comments.js")
 
 console.log(blogs);
- ////////////////////////////////
+/////////////////////////////////
 // Make each individual blog page
 /////////////////////////////////
 for (let length = 0; length < blogs.length; length++) {
@@ -22,19 +22,24 @@ for (let length = 0; length < blogs.length; length++) {
                     ${blogs[length][3].map(image => `<img class="blog-image" height="200" src="/images/${image}" alt="${image}" />`).join('')}
                   </div>` 
                   : ''}<br/>
-				 <sub><i><small>${blogs[length][4]}</small></i></sub><!--hr/>
-				<h3>Comments section (under construction):</h3><br/>
-				 <form action="" id="commentForm">
-						<input name="${length}" class="form-control" id="name" placeholder="Enter your name/alias (no login required)..."><br/>
-						<input height="40px" name="${length}" class="form-control input-comment" id="comment" placeholder="Enter your Comment...">
+				 <sub><i><small>${blogs[length][4]}</small></i></sub><hr/>
+				 <h3>Comments section:</h3><br/>
+				 <form action="http://deadvey.com/blog/submit-comment" id="commentForm" method="post">
+						<input name="name" class="form-control" id="name" placeholder="Enter your name"><br/>
+						<input height="40px" name="comment" class="form-control input-comment" id="comment" placeholder="Enter your Comment...">
+                                                <input type="hidden" name="pageID" value="${length}">
 						<button type="submit">Submit</button>
 				</form>
 
-				  <div class="comments"-->
-						<br/>
+				  <div class="${length}" id="comments">`
+
+
+    for (let comment = 0; comment<comments[length].length; comment++) {
+	content+=`<b>${comments[length][comment][0]}</b>: <i>${comments[length][comment][1]}</i><br/>`
+    }
+				        
 				      
-				  </div>
-				</div>` 
+  content+=`</div></div>` 
 
 
   if (length > 0) { // Generate link to previous blog
@@ -46,7 +51,7 @@ for (let length = 0; length < blogs.length; length++) {
                 
   content += `
                 <div id="links">
-                </div><script src="/blog/comments.js"></script><script src="/blog/submit-comment.js"></script>${pageBottom}` 
+                </div><script src="/blog/comments.js"></script><script src="/blog/displayComments.js"></script>${pageBottom}` 
 
 
   fs.writeFile(blogFilePath, content, (err) => {
