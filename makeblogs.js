@@ -24,7 +24,7 @@ for (let length = 0; length < blogs.length; length++) {
                   : ''}<br/>
 				 <sub><i><small>${blogs[length][4]}</small></i></sub><hr/>
 				 <h3>Comments section:</h3><br/>
-				 <form action="http://deadvey.com/blog/submit-comment" id="commentForm" method="post">
+				 <form action="/blog/submit-comment" id="commentForm" method="post">
 						<input name="name" class="form-control" id="name" placeholder="Enter your name"><br/>
 						<input height="40px" name="comment" class="form-control input-comment" id="comment" placeholder="Enter your Comment...">
                                                 <input type="hidden" name="pageID" value="${length}">
